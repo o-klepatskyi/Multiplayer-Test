@@ -33,8 +33,11 @@ package multiplayer;
 
 import java.net.*;
 import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class EchoServer {
+
     public static void main(String[] args) throws IOException {
 
         if (args.length != 1) {
@@ -58,6 +61,7 @@ public class EchoServer {
                 if (inputLine.startsWith("server")) {
                     out.println("Server is listening.");
                 }
+                System.out.println(getCurrentDateAndTime() + " Client message: " + inputLine);
                 out.println(inputLine);
             }
         } catch (IOException e) {
@@ -65,5 +69,11 @@ public class EchoServer {
                     + portNumber + " or listening for a connection");
             System.out.println(e.getMessage());
         }
+    }
+
+    private static String getCurrentDateAndTime() {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date date = new Date();
+        return formatter.format(date);
     }
 }
