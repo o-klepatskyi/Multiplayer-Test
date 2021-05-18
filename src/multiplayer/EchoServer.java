@@ -55,6 +55,9 @@ public class EchoServer {
         ) {
             String inputLine;
             while ((inputLine = in.readLine()) != null) {
+                if (inputLine.startsWith("server")) {
+                    out.println("Server is listening.");
+                }
                 out.println(inputLine);
             }
         } catch (IOException e) {
