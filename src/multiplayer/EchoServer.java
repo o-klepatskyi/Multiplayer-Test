@@ -60,9 +60,10 @@ public class EchoServer {
             while ((inputLine = in.readLine()) != null) {
                 if (inputLine.startsWith("server")) {
                     out.println("Server is listening.");
+                } else {
+                    out.println(inputLine);
                 }
                 System.out.println(getCurrentDateAndTime() + " Client message: " + inputLine);
-                out.println(inputLine);
             }
         } catch (IOException e) {
             System.out.println("Exception caught when trying to listen on port "
