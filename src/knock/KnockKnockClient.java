@@ -37,14 +37,12 @@ import java.net.*;
 public class KnockKnockClient {
     public static void main(String[] args) throws IOException {
 
-        if (args.length != 2) {
-            System.err.println(
-                    "Usage: java EchoClient <host name> <port number>");
-            System.exit(1);
-        }
-
-        String hostName = args[0];
-        int portNumber = Integer.parseInt(args[1]);
+        BufferedReader stdIn =
+                new BufferedReader(new InputStreamReader(System.in));
+        System.out.print("Enter ip: ");
+        String hostName = stdIn.readLine().replace("\n", "");
+        System.out.print("Enter port: ");
+        int portNumber = Integer.parseInt(stdIn.readLine());
 
         try (
                 Socket kkSocket = new Socket(hostName, portNumber);
@@ -52,8 +50,7 @@ public class KnockKnockClient {
                 BufferedReader in = new BufferedReader(
                         new InputStreamReader(kkSocket.getInputStream()));
         ) {
-            BufferedReader stdIn =
-                    new BufferedReader(new InputStreamReader(System.in));
+
             String fromServer;
             String fromUser;
 
