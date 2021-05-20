@@ -10,10 +10,11 @@ public class ServerMenu extends JPanel {
     private HintTextField portField;
 
     ServerMenu() {
-        setLayout(new GridLayout(3,1,15,30));
+        setLayout(new GridLayout(0,1,15,20));
         add(new FillerButton(100,0));
         add(getPortNumberField());
         add(getEnterButton());
+        add(getBackButton());
         setVisible(true);
     }
 
@@ -33,9 +34,23 @@ public class ServerMenu extends JPanel {
     private JTextField getPortNumberField() {
         if (portField == null) {
             portField = new HintTextField("Enter port number");
-            //portField.setPreferredSize(new Dimension(100,35));
-            portField.setSize(100,35);
+            portField.setSize(150,35);
         }
         return portField;
+    }
+
+    private JButton getBackButton() {
+        JButton backButton = new JButton("Back");
+        backButton.setSize(new Dimension(100,35));
+        backButton.setVisible(true);
+        JPanel currentMenu = this;
+        backButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                getParent().remove(currentMenu);
+                MainFrame.openMainMenu();
+            }
+        });
+        return backButton;
     }
 }

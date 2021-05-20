@@ -11,25 +11,27 @@ public class ClientMenu extends JPanel {
     private HintTextField ipField;
 
     ClientMenu() {
-        setLayout(new GridLayout(0,1,15,30));
+        setLayout(new GridLayout(0,1,15,20));
         add(new FillerButton(100,0));
         add(getIPField());
         add(getPortNumberField());
         add(getEnterButton());
+        add(getBackButton());
+        add(new FillerButton(100,0));
         setVisible(true);
     }
 
     private JTextField getIPField() {
         if (ipField == null) {
             ipField = new HintTextField("Enter IP address");
-            ipField.setSize(new Dimension(100,35));
+            ipField.setSize(new Dimension(150,35));
         }
         return ipField;
     }
 
     private JButton getEnterButton() {
         JButton enterButton = new JButton("Connect");
-        enterButton.setSize(new Dimension(100,35));
+        enterButton.setSize(new Dimension(150,35));
         enterButton.setVisible(true);
         enterButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -43,8 +45,23 @@ public class ClientMenu extends JPanel {
     private JTextField getPortNumberField() {
         if (portField == null) {
             portField = new HintTextField("Enter port number");
-            portField.setPreferredSize(new Dimension(100,35));
+            portField.setSize(new Dimension(100,35));
         }
         return portField;
+    }
+
+    private JButton getBackButton() {
+        JButton backButton = new JButton("Back");
+        backButton.setSize(new Dimension(100,35));
+        backButton.setVisible(true);
+        JPanel currentMenu = this;
+        backButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                getParent().remove(currentMenu);
+                MainFrame.openMainMenu();
+            }
+        });
+        return backButton;
     }
 }
