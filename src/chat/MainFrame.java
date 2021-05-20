@@ -8,8 +8,11 @@ public class MainFrame {
     private static MainMenu mainMenu = new MainMenu();
     private static ServerMenu serverMenu = new ServerMenu();
     private static ClientMenu clientMenu = new ClientMenu();
-    
-    private final static Dimension MENU_SIZE = new Dimension(300,300);
+    private static ChatMenu chatMenu = new ChatMenu();
+    private static JPanel currentMenu;
+
+    public final static Dimension MENU_SIZE = new Dimension(300,300);
+    public final static Dimension CHAT_SIZE = new Dimension(500,450);
 
     public static void init() {
         frame.setSize(MENU_SIZE);
@@ -17,24 +20,40 @@ public class MainFrame {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
         frame.add(mainMenu);
+        currentMenu = mainMenu;
+        frame.setResizable(false);
     }
 
     public static void openServerMenu() {
+        frame.remove(currentMenu);
+        currentMenu = serverMenu;
         frame.add(serverMenu);
         frame.pack();
         frame.setSize(MENU_SIZE);
     }
 
     public static void openClientMenu() {
+        frame.remove(currentMenu);
+        currentMenu = clientMenu;
         frame.add(clientMenu);
         frame.pack();
         frame.setSize(MENU_SIZE);
     }
 
     public static void openMainMenu() {
+        frame.remove(currentMenu);
+        currentMenu = mainMenu;
         frame.add(mainMenu);
         frame.pack();
         frame.setSize(MENU_SIZE);
+    }
+
+    public static void openChatMenu() {
+        frame.remove(currentMenu);
+        currentMenu = chatMenu;
+        frame.add(chatMenu);
+        frame.pack();
+        frame.setSize(CHAT_SIZE);
     }
 
     public static void main(String[] args) {

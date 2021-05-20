@@ -22,10 +22,11 @@ public class ServerMenu extends JPanel {
         JButton enterButton = new JButton("Create server");
         enterButton.setSize(new Dimension(100,35));
         enterButton.setVisible(true);
+        JPanel currentMenu = this;
         enterButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-
+                MainFrame.openChatMenu();
             }
         });
         return enterButton;
