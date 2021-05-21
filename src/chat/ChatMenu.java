@@ -48,10 +48,14 @@ public class ChatMenu extends JPanel {
             enterButton.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    chatArea.append(textField.removeText());
+                    showMessage(textField.removeText());
                 }
             });
         }
         return enterButton;
+    }
+
+    public void showMessage(String msg) {
+        chatArea.append(msg + "\n");
     }
 }

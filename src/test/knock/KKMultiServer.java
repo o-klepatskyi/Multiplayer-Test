@@ -1,4 +1,4 @@
-package knock;
+package test.knock;
 
 /*
  * Copyright (c) 1995, 2013, Oracle and/or its affiliates. All rights reserved.
@@ -45,9 +45,12 @@ public class KKMultiServer {
         int portNumber = Integer.parseInt(args[0]);
         boolean listening = true;
 
+        System.out.println("Listening on port " + portNumber);
+
         try (ServerSocket serverSocket = new ServerSocket(portNumber)) {
             while (listening) {
                 new KKMultiServerThread(serverSocket.accept()).start();
+                System.out.println("Client connected");
             }
         } catch (IOException e) {
             System.err.println("Could not listen on port " + portNumber);

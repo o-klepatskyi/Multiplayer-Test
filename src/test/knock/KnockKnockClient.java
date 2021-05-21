@@ -1,4 +1,4 @@
-package knock;
+package test.knock;
 
 /*
  * Copyright (c) 1995, 2013, Oracle and/or its affiliates. All rights reserved.

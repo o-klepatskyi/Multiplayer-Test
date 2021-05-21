@@ -20,11 +20,9 @@ public class MainMenu extends JPanel {
         clientButton.setHorizontalAlignment(SwingConstants.CENTER);
         clientButton.setPreferredSize(new Dimension(150,35));
         clientButton.setVisible(true);
-        JPanel currentMenu = this;
         clientButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                getParent().remove(currentMenu);
                 MainFrame.openClientMenu();
             }
         });
@@ -36,11 +34,9 @@ public class MainMenu extends JPanel {
         serverButton.setHorizontalAlignment(SwingConstants.CENTER);
         serverButton.setPreferredSize(new Dimension(150,35));
         serverButton.setVisible(true);
-        JPanel currentMenu = this;
         serverButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                getParent().remove(currentMenu);
                 MainFrame.openServerMenu();
             }
         });

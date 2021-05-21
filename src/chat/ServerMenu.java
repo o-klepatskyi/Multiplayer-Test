@@ -8,10 +8,14 @@ import java.awt.event.MouseEvent;
 public class ServerMenu extends JPanel {
 
     private HintTextField portField;
+    private HintTextField nameField;
+    private HintTextField ipField;
 
     ServerMenu() {
-        setLayout(new GridLayout(0,1,15,20));
+        setLayout(new GridLayout(0,1,15,15));
         add(new FillerButton(100,0));
+        add(getNameField());
+        add(getIPField());
         add(getPortNumberField());
         add(getEnterButton());
         add(getBackButton());
@@ -22,7 +26,6 @@ public class ServerMenu extends JPanel {
         JButton enterButton = new JButton("Create server");
         enterButton.setSize(new Dimension(100,35));
         enterButton.setVisible(true);
-        JPanel currentMenu = this;
         enterButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -53,5 +56,21 @@ public class ServerMenu extends JPanel {
             }
         });
         return backButton;
+    }
+
+    private HintTextField getNameField() {
+        if (nameField == null) {
+            nameField = new HintTextField("Enter username");
+            nameField.setSize(new Dimension(150,35));
+        }
+        return nameField;
+    }
+
+    private JTextField getIPField() {
+        if (ipField == null) {
+            ipField = new HintTextField("Enter IP address");
+            ipField.setSize(new Dimension(150,35));
+        }
+        return ipField;
     }
 }

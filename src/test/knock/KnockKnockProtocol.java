@@ -1,4 +1,4 @@
-package knock;
+package test.knock;
 
 /*
  * Copyright (c) 1995, 2008, Oracle and/or its affiliates. All rights reserved.
@@ -30,9 +30,6 @@ package knock;
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
-import java.net.*;
-import java.io.*;
 
 public class KnockKnockProtocol {
     private static final int WAITING = 0;

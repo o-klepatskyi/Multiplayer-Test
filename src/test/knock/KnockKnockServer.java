@@ -1,7 +1,7 @@
-package knock;
+package test.knock;
 
 /*
- * Copyright (c) 1995, 2013, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 1995, 2014, Oracle and/or its affiliates. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -34,23 +34,28 @@ package knock;
 import java.net.*;
 import java.io.*;
 
-public class KKMultiServerThread extends Thread {
-    private Socket socket = null;
+public class KnockKnockServer {
+    public static void main(String[] args) throws IOException {
 
-    public KKMultiServerThread(Socket socket) {
-        super("KKMultiServerThread");
-        this.socket = socket;
-    }
+        if (args.length != 1) {
+            System.err.println("Usage: java KnockKnockServer <port number>");
+            System.exit(1);
+        }
 
-    public void run() {
+        int portNumber = Integer.parseInt(args[0]);
 
         try (
-                PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+                ServerSocket serverSocket = new ServerSocket(portNumber);
+                Socket clientSocket = serverSocket.accept();
+                PrintWriter out =
+                        new PrintWriter(clientSocket.getOutputStream(), true);
                 BufferedReader in = new BufferedReader(
-                        new InputStreamReader(
-                                socket.getInputStream()));
+                        new InputStreamReader(clientSocket.getInputStream()));
         ) {
+
             String inputLine, outputLine;
+
+            // Initiate conversation with client
             KnockKnockProtocol kkp = new KnockKnockProtocol();
             outputLine = kkp.processInput(null);
             out.println(outputLine);
@@ -58,12 +63,13 @@ public class KKMultiServerThread extends Thread {
             while ((inputLine = in.readLine()) != null) {
                 outputLine = kkp.processInput(inputLine);
                 out.println(outputLine);
-                if (outputLine.equals("Bye"))
+                if (outputLine.equals("Bye."))
                     break;
             }
-            socket.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Exception caught when trying to listen on port "
+                    + portNumber + " or listening for a connection");
+            System.out.println(e.getMessage());
         }
     }
 }

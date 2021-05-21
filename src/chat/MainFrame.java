@@ -11,7 +11,7 @@ public class MainFrame {
     private static ChatMenu chatMenu = new ChatMenu();
     private static JPanel currentMenu;
 
-    public final static Dimension MENU_SIZE = new Dimension(300,300);
+    private final static Dimension MENU_SIZE = new Dimension(300,300);
     public final static Dimension CHAT_SIZE = new Dimension(500,450);
 
     public static void init() {
@@ -54,6 +54,10 @@ public class MainFrame {
         frame.add(chatMenu);
         frame.pack();
         frame.setSize(CHAT_SIZE);
+    }
+
+    public static void showMessage(String msg) {
+        chatMenu.showMessage(msg);
     }
 
     public static void main(String[] args) {

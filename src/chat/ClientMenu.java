@@ -9,16 +9,26 @@ public class ClientMenu extends JPanel {
 
     private HintTextField portField;
     private HintTextField ipField;
+    private HintTextField nameField;
 
     ClientMenu() {
-        setLayout(new GridLayout(0,1,15,20));
+        setLayout(new GridLayout(0,1,15,15));
         add(new FillerButton(100,0));
+        add(getNameField());
         add(getIPField());
         add(getPortNumberField());
         add(getEnterButton());
         add(getBackButton());
         add(new FillerButton(100,0));
         setVisible(true);
+    }
+
+    private HintTextField getNameField() {
+        if (nameField == null) {
+            nameField = new HintTextField("Enter username");
+            nameField.setSize(new Dimension(150,35));
+        }
+        return nameField;
     }
 
     private JTextField getIPField() {
@@ -54,11 +64,9 @@ public class ClientMenu extends JPanel {
         JButton backButton = new JButton("Back");
         backButton.setSize(new Dimension(100,35));
         backButton.setVisible(true);
-        JPanel currentMenu = this;
         backButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                getParent().remove(currentMenu);
                 MainFrame.openMainMenu();
             }
         });
