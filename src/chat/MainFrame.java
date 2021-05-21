@@ -17,7 +17,6 @@ public class MainFrame {
     private static ChatClient client;
     public static final String CLOSE_TEXT = "/exit";
 
-
     private final static Dimension MENU_SIZE = new Dimension(300,300);
     public final static Dimension CHAT_SIZE = new Dimension(500,450);
 

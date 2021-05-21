@@ -2,9 +2,6 @@
   <artifact type="jar" name="Multiplayer Test:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/Multiplayer_Test_jar</output-path>
     <root id="archive" name="Multiplayer Test.jar">
-      <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/src/1/META-INF/MANIFEST.MF" />
-      </element>
       <element id="module-output" name="Multiplayer Test" />
     </root>
   </artifact>

@@ -1,13 +1,11 @@
 package chat.network;
 
 import chat.MainFrame;
-
 import java.net.*;
 import java.io.*;
 
 /**
  * This is the chat client program.
- * Type 'bye' to terminate the program.
  *
  * @author www.codejava.net
  */
@@ -22,15 +20,11 @@ public class ChatClient {
         this.hostname = hostname;
         this.port = port;
         this.userName = userName;
-    };
+    }
 
     public void execute() {
         try {
             socket = new Socket(hostname, port);
-
-            MainFrame.showMessage("Connected to the chat server");
-
-            new ReadThread(socket, this).start();
 
             try {
                 OutputStream output = socket.getOutputStream();
@@ -39,8 +33,11 @@ public class ChatClient {
                 System.out.println("Error getting output stream: " + ex.getMessage());
                 ex.printStackTrace();
             }
+
             writer.println(userName);
 
+            new ReadThread(socket, this).start();
+            MainFrame.showMessage("Connected to the chat server");
         } catch (UnknownHostException ex) {
             MainFrame.showMessage("Server not found: " + ex.getMessage());
         } catch (IOException ex) {
@@ -57,13 +54,17 @@ public class ChatClient {
         System.out.println(userName + " sends message: " + msg);
         writer.println(msg);
         if (msg.equals(MainFrame.CLOSE_TEXT)) {
-            try {
-                socket.close();
-                MainFrame.setTextAreaClosed();
-            } catch (IOException ex) {
-                MainFrame.showMessage("Error writing to server: " + ex.getMessage());
-                System.out.println("Error writing to server: " + ex.getMessage());
-            }
+            close();
+        }
+    }
+
+    public void close() {
+        try {
+            socket.close();
+            MainFrame.setTextAreaClosed();
+        } catch (IOException ex) {
+            MainFrame.showMessage("Error writing to server: " + ex.getMessage());
+            System.out.println("Error writing to server: " + ex.getMessage());
         }
     }
 }

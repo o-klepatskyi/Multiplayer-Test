@@ -1,8 +1,6 @@
 package chat.network;
 
 import chat.MainFrame;
-import com.sun.tools.javac.Main;
-
 import java.io.*;
 import java.net.*;
 
@@ -30,29 +28,32 @@ public class UserThread extends Thread {
             OutputStream output = socket.getOutputStream();
             writer = new PrintWriter(output, true);
 
-            printUsers();
-
             String userName = reader.readLine();
-            server.addUserName(userName);
+            if (server.hasUser(userName)) {
+                sendMessage(ChatServer.NAME_ERROR + "");
+            } else {
+                sendMessage(ChatServer.OK + "");
+                printUsers();
+                server.addUserName(userName);
+                String serverMessage = "New user connected: " + userName;
+                server.broadcast(serverMessage, this);
 
-            String serverMessage = "New user connected: " + userName;
-            server.broadcast(serverMessage, this);
+                String clientMessage;
 
-            String clientMessage;
+                do {
+                    System.out.println(userName + " thread listening...");
+                    clientMessage = reader.readLine();
+                    serverMessage = "[" + userName + "]: " + clientMessage;
+                    server.broadcast(serverMessage, null);
 
-            do {
-                System.out.println(userName + " thread listening...");
-                clientMessage = reader.readLine();
-                serverMessage = "[" + userName + "]: " + clientMessage;
-                server.broadcast(serverMessage, null);
+                } while (!clientMessage.equals(MainFrame.CLOSE_TEXT));
 
-            } while (!clientMessage.equals(MainFrame.CLOSE_TEXT));
+                server.removeUser(userName, this);
+                socket.close();
 
-            server.removeUser(userName, this);
-            socket.close();
-
-            serverMessage = userName + " has quit.";
-            server.broadcast(serverMessage, this);
+                serverMessage = userName + " has quit.";
+                server.broadcast(serverMessage, this);
+            }
         } catch (IOException ex) {
             System.out.println("Error in UserThread: " + ex.getMessage());
             ex.printStackTrace();

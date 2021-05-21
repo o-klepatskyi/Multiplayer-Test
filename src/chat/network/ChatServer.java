@@ -15,6 +15,9 @@ public class ChatServer {
     private Set<String> userNames = new HashSet<>();
     private Set<UserThread> userThreads = new HashSet<>();
 
+    public static final int NAME_ERROR =  1;
+    public static final int OK = 0;
+
     public ChatServer(int port) {
         this.port = port;
     }
@@ -54,12 +57,12 @@ public class ChatServer {
     /**
      * Stores username of the newly connected client.
      */
-    void addUserName(String userName) {
-        userNames.add(userName);
+    boolean addUserName(String userName) {
+        return userNames.add(userName);
     }
 
     /**
-     * When a client is disconneted, removes the associated username and UserThread
+     * When a client is disconnected, removes the associated username and UserThread
      */
     void removeUser(String userName, UserThread aUser) {
         boolean removed = userNames.remove(userName);
@@ -77,5 +80,9 @@ public class ChatServer {
      */
     boolean hasUsers() {
         return !this.userNames.isEmpty();
+    }
+
+    public boolean hasUser(String userName) {
+        return userNames.contains(userName);
     }
 }

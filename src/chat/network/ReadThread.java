@@ -31,21 +31,35 @@ public class ReadThread extends Thread {
     }
 
     public void run() {
-        while (true) {
-            try {
-                System.out.println("Client waiting for message...");
-                String response = reader.readLine();
-                System.out.println("\n" + response);
+        int first_response = -1;
+        try {
+            first_response = Integer.parseInt(reader.readLine());
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
+        if (first_response == ChatServer.NAME_ERROR) {
+            MainFrame.showMessage("Name " + client.getUserName() + " is already occupied");
+            client.close();
+        } else if (first_response != ChatServer.OK) {
+            MainFrame.showMessage("Error occurred while connecting to the room.");
+            client.close();
+        } else {
+            while (true) {
+                try {
+                    System.out.println("Client waiting for message...");
+                    String response = reader.readLine();
+                    System.out.println("\n" + response);
 
-                // prints the username after displaying the server's message
-                if (client.getUserName() != null) {
-                    System.out.print(response);
-                    MainFrame.showMessage(response);
+                    // prints the username after displaying the server's message
+                    if (client.getUserName() != null) {
+                        System.out.print(response);
+                        MainFrame.showMessage(response);
+                    }
+                } catch (IOException ex) {
+                    System.out.println("Error reading from server: " + ex.getMessage());
+                    ex.printStackTrace();
+                    break;
                 }
-            } catch (IOException ex) {
-                System.out.println("Error reading from server: " + ex.getMessage());
-                ex.printStackTrace();
-                break;
             }
         }
     }

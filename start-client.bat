@@ -1,1 +1,0 @@
-"C:\Program Files\Java\jdk-14.0.2\bin\java.exe" "-javaagent:D:\Program Files\IntelliJ IDEA 2020.3.1\lib\idea_rt.jar=63957:D:\Program Files\IntelliJ IDEA 2020.3.1\bin" -Dfile.encoding=UTF-8 -classpath "D:\Study\2020-2021\2021-summer\practise\Multiplayer Test\out\production\Multiplayer Test" multicast.MulticastClient
