@@ -24,6 +24,7 @@ public class WriteThread extends Thread {
         try {
             OutputStream output = socket.getOutputStream();
             writer = new PrintWriter(output, true);
+            writer.println(client.getUserName());
         } catch (IOException ex) {
             System.out.println("Error getting output stream: " + ex.getMessage());
             ex.printStackTrace();

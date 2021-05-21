@@ -36,10 +36,14 @@ class HintTextField extends JTextField implements FocusListener {
         }
     }
 
-    public String removeText() {
+    public String removeText(boolean isStayingFocused) {
         String text = getText();
-        setText(hint);
-        showingHint = true;
+        if (isStayingFocused) {
+            setText("");
+        } else {
+            setText(hint);
+            showingHint = true;
+        }
         return text;
     }
 

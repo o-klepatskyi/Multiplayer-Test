@@ -15,6 +15,7 @@ public class MainFrame {
     private static JPanel currentMenu;
     private static ChatServer server;
     private static ChatClient client;
+    public static final String CLOSE_TEXT = "/exit";
 
 
     private final static Dimension MENU_SIZE = new Dimension(300,300);
@@ -85,5 +86,9 @@ public class MainFrame {
 
     public static void sendMessage(String msg) {
         client.sendMessage(msg);
+    }
+
+    public static void setTextAreaClosed() {
+        chatMenu.setTextAreaClosed();
     }
 }

@@ -30,7 +30,7 @@ public class MainMenu extends JPanel {
     }
 
     private JButton getServerButton() {
-        JButton serverButton = new JButton("Set up server");
+        JButton serverButton = new JButton("Create room");
         serverButton.setHorizontalAlignment(SwingConstants.CENTER);
         serverButton.setPreferredSize(new Dimension(150,35));
         serverButton.setVisible(true);

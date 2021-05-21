@@ -7,7 +7,7 @@ import java.io.*;
 
 /**
  * This is the chat client program.
- * Type 'bye' to terminte the program.
+ * Type 'bye' to terminate the program.
  *
  * @author www.codejava.net
  */
@@ -15,7 +15,8 @@ public class ChatClient {
     private String hostname;
     private int port;
     private String userName;
-    public WriteThread write;
+    private PrintWriter writer;
+    private Socket socket;
 
     public ChatClient(String hostname, int port, String userName) {
         this.hostname = hostname;
@@ -25,13 +26,20 @@ public class ChatClient {
 
     public void execute() {
         try {
-            Socket socket = new Socket(hostname, port);
+            socket = new Socket(hostname, port);
 
             MainFrame.showMessage("Connected to the chat server");
 
             new ReadThread(socket, this).start();
-            write = new WriteThread(socket, this);
-            write.start();
+
+            try {
+                OutputStream output = socket.getOutputStream();
+                writer = new PrintWriter(output, true);
+            } catch (IOException ex) {
+                System.out.println("Error getting output stream: " + ex.getMessage());
+                ex.printStackTrace();
+            }
+            writer.println(userName);
 
         } catch (UnknownHostException ex) {
             MainFrame.showMessage("Server not found: " + ex.getMessage());
@@ -41,15 +49,20 @@ public class ChatClient {
 
     }
 
-    void setUserName(String userName) {
-        this.userName = userName;
-    }
-
     String getUserName() {
         return this.userName;
     }
 
     public void sendMessage(String msg) {
-        write.sendMessage(msg);
+        System.out.println(userName + " sends message: " + msg);
+        writer.println(msg);
+        if (msg.equals(MainFrame.CLOSE_TEXT)) {
+            try {
+                socket.close();
+            } catch (IOException ex) {
+                MainFrame.showMessage("Error writing to server: " + ex.getMessage());
+                System.out.println("Error writing to server: " + ex.getMessage());
+            }
+        }
     }
 }

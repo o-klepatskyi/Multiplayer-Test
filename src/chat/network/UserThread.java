@@ -1,5 +1,8 @@
 package chat.network;
 
+import chat.MainFrame;
+import com.sun.tools.javac.Main;
+
 import java.io.*;
 import java.net.*;
 
@@ -38,18 +41,18 @@ public class UserThread extends Thread {
             String clientMessage;
 
             do {
+                System.out.println(userName + " thread listening...");
                 clientMessage = reader.readLine();
                 serverMessage = "[" + userName + "]: " + clientMessage;
-                server.broadcast(serverMessage, this);
+                server.broadcast(serverMessage, null);
 
-            } while (!clientMessage.equals("bye"));
+            } while (!clientMessage.equals(MainFrame.CLOSE_TEXT));
 
             server.removeUser(userName, this);
             socket.close();
 
-            serverMessage = userName + " has quitted.";
+            serverMessage = userName + " has quit.";
             server.broadcast(serverMessage, this);
-
         } catch (IOException ex) {
             System.out.println("Error in UserThread: " + ex.getMessage());
             ex.printStackTrace();

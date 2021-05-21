@@ -22,12 +22,12 @@ public class ChatServer {
     public void execute() {
         try (ServerSocket serverSocket = new ServerSocket(port)) {
 
-            MainFrame.showMessage("Chat Server is listening on port " + port);
+            //MainFrame.showMessage("Chat Server is listening on port " + port);
             System.out.println("Chat Server is listening on port " + port);
 
             while (true) {
                 Socket socket = serverSocket.accept();
-                MainFrame.showMessage("New user connected");
+                //MainFrame.showMessage("New user connected");
                 System.out.println("New user connected");
 
                 UserThread newUser = new UserThread(socket, this);
@@ -67,7 +67,7 @@ public class ChatServer {
         boolean removed = userNames.remove(userName);
         if (removed) {
             userThreads.remove(aUser);
-            MainFrame.showMessage("The user " + userName + " quitted");
+            //MainFrame.showMessage("The user " + userName + " quitted");
         }
     }
 

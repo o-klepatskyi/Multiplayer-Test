@@ -22,7 +22,7 @@ public class ServerMenu extends JPanel {
     }
 
     private JButton getEnterButton() {
-        JButton enterButton = new JButton("Create server");
+        JButton enterButton = new JButton("Create room");
         enterButton.setSize(new Dimension(100,35));
         enterButton.setVisible(true);
         enterButton.addMouseListener(new MouseAdapter() {

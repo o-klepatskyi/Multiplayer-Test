@@ -2,6 +2,8 @@ package chat;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -35,8 +37,18 @@ public class ChatMenu extends JPanel {
 
     private JTextField getTextField() {
         if (textField == null) {
-            textField = new HintTextField("Enter your message");
+            textField = new HintTextField("Type your message here. Type /exit to leave chat");
             textField.setPreferredSize(new Dimension(390, 35));
+            textField.addKeyListener(new KeyAdapter() {
+                @Override
+                public void keyTyped(KeyEvent e) {
+                    if (textField.isEditable() && e.getKeyChar() == KeyEvent.VK_ENTER) {
+                        if (textField.getText().length() != 0) {
+                            MainFrame.sendMessage(textField.removeText(true));
+                        }
+                    }
+                }
+            });
         }
         return textField;
     }
@@ -48,8 +60,9 @@ public class ChatMenu extends JPanel {
             enterButton.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    //showMessage(textField.removeText());
-                    MainFrame.sendMessage(textField.removeText());
+                    if (enterButton.isEnabled() && textField.getText().length() != 0) {
+                        MainFrame.sendMessage(textField.removeText(false));
+                    }
                 }
             });
         }
@@ -58,5 +71,11 @@ public class ChatMenu extends JPanel {
 
     public void showMessage(String msg) {
         chatArea.append(msg + "\n");
+    }
+
+    public void setTextAreaClosed() {
+        textField.setText("You have quit the room. Reopen the app to reconnect.");
+        textField.setEditable(false);
+        enterButton.setEnabled(false);
     }
 }
