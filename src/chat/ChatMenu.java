@@ -75,8 +75,7 @@ public class ChatMenu extends JPanel {
     }
 
     public void setTextAreaClosed() {
-        textField.setText("You have quit the room. Reopen the app to reconnect.");
-        textField.setEditable(false);
+        textField.close();
         enterButton.setEnabled(false);
     }
 }

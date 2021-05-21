@@ -1,14 +1,13 @@
-/*
-Not my own class
-Credits: https://stackoverflow.com/a/1739037
-*/
-
 package chat;
 
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import javax.swing.*;
 
+
+/**
+ * @author https://stackoverflow.com/a/1739037
+ */
 class HintTextField extends JTextField implements FocusListener {
 
     private final String hint;
@@ -50,5 +49,12 @@ class HintTextField extends JTextField implements FocusListener {
     @Override
     public String getText() {
         return showingHint ? "" : super.getText();
+    }
+
+    public void close() {
+        setText("You have quit the room. Reopen the app to reconnect.");
+        setEditable(false);
+        setFocusable(false);
+        showingHint = false;
     }
 }
