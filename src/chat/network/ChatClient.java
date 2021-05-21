@@ -59,6 +59,7 @@ public class ChatClient {
         if (msg.equals(MainFrame.CLOSE_TEXT)) {
             try {
                 socket.close();
+                MainFrame.setTextAreaClosed();
             } catch (IOException ex) {
                 MainFrame.showMessage("Error writing to server: " + ex.getMessage());
                 System.out.println("Error writing to server: " + ex.getMessage());

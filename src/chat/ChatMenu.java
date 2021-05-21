@@ -2,10 +2,7 @@ package chat;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 
 public class ChatMenu extends JPanel {
 
@@ -17,6 +14,8 @@ public class ChatMenu extends JPanel {
         setLayout(new BorderLayout());
         JScrollPane scrollPane = new JScrollPane(getChatArea());
         scrollPane.setPreferredSize(new Dimension(470,300));
+        scrollPane.getVerticalScrollBar().addAdjustmentListener(
+                e -> e.getAdjustable().setValue(e.getAdjustable().getMaximum()));
         add(scrollPane, BorderLayout.CENTER);
         scrollPane.revalidate();
         JPanel bottomPanel = new JPanel();
@@ -74,6 +73,7 @@ public class ChatMenu extends JPanel {
     }
 
     public void setTextAreaClosed() {
+        System.out.println(chatArea.getText());
         textField.setText("You have quit the room. Reopen the app to reconnect.");
         textField.setEditable(false);
         enterButton.setEnabled(false);
