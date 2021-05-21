@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainFrame {
-    private static JFrame frame = new JFrame("My online chat");
+    private static JFrame frame = new JFrame("My online chat | Made by Klepatskyi Oleh");
     private static MainMenu mainMenu = new MainMenu();
     private static ServerMenu serverMenu = new ServerMenu();
     private static ClientMenu clientMenu = new ClientMenu();

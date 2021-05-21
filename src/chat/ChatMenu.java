@@ -1,6 +1,7 @@
 package chat;
 
 import javax.swing.*;
+import javax.swing.text.DefaultCaret;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -9,15 +10,16 @@ public class ChatMenu extends JPanel {
     private JTextArea chatArea;
     private HintTextField textField;
     private JButton enterButton;
+    private JScrollPane scrollPane;
 
     ChatMenu() {
         setLayout(new BorderLayout());
-        JScrollPane scrollPane = new JScrollPane(getChatArea());
+        scrollPane = new JScrollPane(getChatArea());
         scrollPane.setPreferredSize(new Dimension(470,300));
-        scrollPane.getVerticalScrollBar().addAdjustmentListener(
-                e -> e.getAdjustable().setValue(e.getAdjustable().getMaximum()));
         add(scrollPane, BorderLayout.CENTER);
         scrollPane.revalidate();
+        DefaultCaret caret = (DefaultCaret) chatArea.getCaret();
+        caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
         JPanel bottomPanel = new JPanel();
         bottomPanel.setSize(new Dimension(470,35));
         bottomPanel.setLayout(new FlowLayout());
@@ -73,7 +75,6 @@ public class ChatMenu extends JPanel {
     }
 
     public void setTextAreaClosed() {
-        System.out.println(chatArea.getText());
         textField.setText("You have quit the room. Reopen the app to reconnect.");
         textField.setEditable(false);
         enterButton.setEnabled(false);
