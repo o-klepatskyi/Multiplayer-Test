@@ -1,5 +1,7 @@
 package chat.network;
 
+import chat.MainFrame;
+
 import java.io.*;
 import java.net.*;
 
@@ -30,25 +32,17 @@ public class WriteThread extends Thread {
 
     public void run() {
 
-        Console console = System.console();
+    }
 
-        String userName = console.readLine("\nEnter your name: ");
-        client.setUserName(userName);
-        writer.println(userName);
-
-        String text;
-
-        do {
-            text = console.readLine("[" + userName + "]: ");
-            writer.println(text);
-
-        } while (!text.equals("bye"));
-
-        try {
-            socket.close();
-        } catch (IOException ex) {
-
-            System.out.println("Error writing to server: " + ex.getMessage());
-        }
+    public void sendMessage(String msg) {
+        writer.println(msg);
+        if (msg.equals("exit")) {
+            try {
+                socket.close();
+            } catch (IOException ex) {
+                MainFrame.showMessage("Error writing to server: " + ex.getMessage());
+                System.out.println("Error writing to server: " + ex.getMessage());
+            }
+        };
     }
 }

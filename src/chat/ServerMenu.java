@@ -15,7 +15,6 @@ public class ServerMenu extends JPanel {
         setLayout(new GridLayout(0,1,15,15));
         add(new FillerButton(100,0));
         add(getNameField());
-        add(getIPField());
         add(getPortNumberField());
         add(getEnterButton());
         add(getBackButton());
@@ -29,10 +28,33 @@ public class ServerMenu extends JPanel {
         enterButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                MainFrame.openChatMenu();
+                if (!getServerInfo()) {
+                    JOptionPane.showMessageDialog(null,
+                            "Enter all the information carefully.",
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
         return enterButton;
+    }
+
+    private boolean getServerInfo() {
+        String username = nameField.getText();
+        int portNumber;
+        try {
+            portNumber = Integer.parseInt(portField.getText());
+        } catch (Exception e) {
+            return false;
+        }
+
+        if (username.length() == 0) {
+            return false;
+        }
+
+        MainFrame.startServer(portNumber, username);
+
+        return true;
     }
 
     private JTextField getPortNumberField() {

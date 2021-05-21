@@ -1,5 +1,7 @@
 package chat.network;
 
+import chat.MainFrame;
+
 import java.io.*;
 import java.net.*;
 
@@ -23,8 +25,8 @@ public class ReadThread extends Thread {
             InputStream input = socket.getInputStream();
             reader = new BufferedReader(new InputStreamReader(input));
         } catch (IOException ex) {
-            System.out.println("Error getting input stream: " + ex.getMessage());
-            ex.printStackTrace();
+            MainFrame.showMessage("Error getting input stream: " + ex.getMessage());
+            //ex.printStackTrace();
         }
     }
 

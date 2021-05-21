@@ -46,10 +46,34 @@ public class ClientMenu extends JPanel {
         enterButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-
+                if (!getClientInfo()) {
+                    JOptionPane.showMessageDialog(null,
+                            "Enter all the information carefully.",
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
         return enterButton;
+    }
+
+    private boolean getClientInfo() {
+        String username = nameField.getText();
+        String ipAddress = ipField.getText();
+        int portNumber;
+        try {
+            portNumber = Integer.parseInt(portField.getText());
+        } catch (Exception e) {
+            return false;
+        }
+
+        if (username.length() == 0 || ipAddress.length() == 0) {
+            return false;
+        }
+
+        MainFrame.startClient(ipAddress, portNumber, username);
+
+        return true;
     }
 
     private JTextField getPortNumberField() {

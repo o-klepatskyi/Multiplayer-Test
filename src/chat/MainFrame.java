@@ -1,5 +1,8 @@
 package chat;
 
+import chat.network.ChatClient;
+import chat.network.ChatServer;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -10,6 +13,9 @@ public class MainFrame {
     private static ClientMenu clientMenu = new ClientMenu();
     private static ChatMenu chatMenu = new ChatMenu();
     private static JPanel currentMenu;
+    private static ChatServer server;
+    private static ChatClient client;
+
 
     private final static Dimension MENU_SIZE = new Dimension(300,300);
     public final static Dimension CHAT_SIZE = new Dimension(500,450);
@@ -62,5 +68,22 @@ public class MainFrame {
 
     public static void main(String[] args) {
         init();
+    }
+
+    public static void startServer(int portNumber, String userName) {
+        openChatMenu();
+        server = new ChatServer(portNumber);
+        new Thread(() -> server.execute()).start();
+        startClient("127.0.0.1", portNumber, userName);
+    }
+
+    public static void startClient(String ipAddress, int portNumber, String username) {
+        openChatMenu();
+        client = new ChatClient(ipAddress, portNumber, username);
+        new Thread(() -> client.execute()).start();
+    }
+
+    public static void sendMessage(String msg) {
+        client.sendMessage(msg);
     }
 }
